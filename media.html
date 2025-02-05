@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diablos Negros</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Estilos para la animación del logo */
+        #logo-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        #logo {
+            width: 800px; /* Tamaño del logo */
+            animation: zoomInOut 2s infinite;
+        }
+
+        @keyframes zoomInOut {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+        }
+
+        /* Estilos generales */
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Asegura que el body ocupe toda la altura de la ventana */
+        }
+
+        main {
+            flex: 1; /* Esto hace que el contenido principal ocupe el espacio disponible */
+        }
+
+        footer {
+            margin-top: auto; /* Empuja el footer hacia el final de la página */
+            text-align: center;
+            padding: 20px;
+            background-color: #000000;
+        }
+
+        .logo-link img {
+            width: 100px;
+            height: auto;
+            vertical-align: middle;
+        }
+
+        footer .footer-image-container img {
+            max-width: 200px;
+            margin-bottom: 20px;
+        }
+
+        /* Estilos para la galería */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 50px;
+            padding: 100px;
+            max-width: 1000px;  /* Esto asegura que la galería no sea más grande que 1200px de ancho */
+            margin: 0 auto;  /* Centra el contenedor en la página */
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(235, 234, 234, 0.5); /* Efecto de luz LED */
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .gallery-item img:hover {
+            transform: scale(1.1);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Estilos para el modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: center;
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 800px;
+            position: relative;
+        }
+
+        .modal-img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: auto;
+        }
+
+        .close {
+            color: #fff;
+            position: absolute;
+            top: 10px;
+            right: 25px;
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Estilos para el carrusel */
+        .carousel {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -22px;
+            color: #fff;
+            font-weight: bold;
+            font-size: 30px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .prev {
+            left: 0;
+        }
+
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        /* Miniaturas */
+        .thumbnail-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .thumbnail-item {
+            margin: 0 5px;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: opacity 0.3s ease;
+        }
+
+        .thumbnail-item:hover {
+            opacity: 1;
+        }
+
+        .thumbnail-item.active {
+            opacity: 1;
+            border: 2px solid #fff;
+        }
+
+        .thumbnail-item img {
+            width: 100px;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        /* Estilos específicos para la información de conciertos */
+        .overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            width: 100%;
+            box-sizing: border-box;
+            border-radius: 8px; /* Ajusta según sea necesario */
+        }
+
+        .gallery-item:hover .overlay {
+            opacity: 1;
+        }
+
+        /* Responsividad */
+        @media (max-width: 768px) {
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 10px;
+                padding: 10px;
+            }
+
+            .overlay {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 5px;
+                padding: 5px;
+            }
+
+            .overlay {
+                font-size: 12px;
+            }
+
+            footer {
+                font-size: 14px;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Contenedor para el logo animado -->
+    <div id="logo-overlay">
+        <img id="logo" src="imagenes/logo2.png" alt="Logo de la banda">
+    </div>
+    <!-- Header -->
+    <header>
+        <nav>
+            <!-- Ícono de menú hamburguesa -->
+            <div class="menu-icon" id="menu-icon">
+                <i class="fas fa-bars"></i>
+            </div>
+    
+            <!-- Menú principal -->
+            <ul class="menu" id="menu">
+                <li><a href="banda.html">BANDA</a></li>
+                <li><a href="musica.html">MÚSICA</a></li>
+                <li class="logo">
+                    <a href="index.html">
+                        <img src="imagenes/logo1.png" alt="Logo de la banda">
+                    </a>
+                </li>
+                <li><a href="media.html">MEDIA</a></li>
+                <li><a href="tienda.html">TIENDA</a></li>
+            </ul>
+    
+            <!-- Íconos sociales en la parte derecha -->
+            <div class="social-icons-right">
+                <a href="https://www.facebook.com/diablosnegroshn" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://x.com/diablosnegroshn" target="_blank" title="Gorjeo" class="nav-link text-white text-accent-hover p-1 fas fa-times"></a>
+                <a href="https://www.instagram.com/diablosnegroshn" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://youtube.com/@diablosnegrostv?si=oNcWLyUthcTKCA-M" target="_blank"><i class="fab fa-youtube"></i></a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Galería de conciertos -->
+    <main>
+        <div class="gallery">
+            <div class="gallery-item" onclick="openModal('concert1')">
+                <img src="imagenes/Perfil Emilio 01.jpg" alt="Concierto 1">
+                <div class="overlay">Tegucigalpa, 17 de noviembre 2024</div>
+            </div>
+
+            <div class="gallery-item" onclick="openModal('concert2')">
+                <img src="imagenes/Perfil Carlos 01.jpg" alt="Concierto 2">
+                <div class="overlay">San Pedro Sula, 22 de noviembre 2024</div>
+            </div>
+
+            <div class="gallery-item" onclick="openModal('concert3')">
+                <img src="imagenes/Perfil Dago 01.jpg" alt="Concierto 3">
+                <div class="overlay">La Ceiba, 1 de diciembre 2024</div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal para mostrar las imágenes -->
+    <div id="myModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <div class="modal-content">
+            <div class="carousel">
+                <div class="prev" onclick="plusSlides(-1)">&#10094;</div>
+                <div class="next" onclick="plusSlides(1)">&#10095;</div>
+                <div id="carousel-content"></div>
+            </div>
+            <div class="thumbnail-container" id="thumbnail-container"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-image-container">
+            <img src="imagenes/logo3.jpg" alt="Logo Footer" class="footer-image">
+        </div>
+        <p>&copy; 2025 Diablos Negros.</p>
+        <p>Contáctanos: diablosnegrosrock@gmail.com</p>
+        <p>
+            Diseño y gestión web por MEDIA FILMS. Vídeos y fotos por:
+            <a href="https://www.facebook.com/ARPhotographyHN?mibextid=ZbWKwL" target="_blank" style="margin-left: 10px;">
+                <img src="imagenes/alex.jpeg" alt="Icono Enlace" style="width: 60px; height: 60px; vertical-align: middle;">
+            </a>
+        </p>
+        <a href="https://vanguardiaproducciones.hn/diablos_negros/?fbclid=IwY2xjawHk8TFleHRuA2FlbQIxMAABHRlTAdL--R2wsgKCAvsBT8thyeh3nls6rKghGIh4eWq-6cz7UhmfyDSDNQ_aem_wDSbTrU1weFrfn7dqM7BIA" target="_blank">
+            <button style="background-color: #ffffff; color: #000; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+                Cotizar
+            </button>
+        </a>
+    </footer>
+
+    <script>
+        const concertImages = {
+            concert1: [
+                'imagenes/banda1.jpg',
+                'imagenes/banda2.jpg',
+                'imagenes/Nilo.jpg',
+                'imagenes/Dago Lozano.jpg',
+                'imagenes/Dago.jpg'
+            ],
+            concert2: [
+                'imagenes/Perfil CArlos.jpg',
+                'imagenes/Perfil Dago 01.jpg',
+                'imagenes/Perfil Dago 02.jpg',
+                'imagenes/Perfil Emilio.jpg',
+                'imagenes/Nilo.jpg'
+            ],
+            concert3: [
+                'imagenes/Perfil Emilio.jpg',
+                'imagenes/Perfil Carlos 01.jpg',
+                'imagenes/Perfil Nilo.jpg',
+                'imagenes/Perfil Dago 02.jpg'
+            ]
+        };
+
+        function openModal(concertId) {
+            const modal = document.getElementById("myModal");
+            const carouselContent = document.getElementById("carousel-content");
+            const thumbnailContainer = document.getElementById("thumbnail-container");
+            const images = concertImages[concertId];
+
+            modal.style.display = "block";
+            carouselContent.innerHTML = '';
+
+            images.forEach((imageSrc, index) => {
+                const imageElement = document.createElement("img");
+                imageElement.src = imageSrc;
+                imageElement.classList.add("modal-img");
+                imageElement.setAttribute("data-index", index);
+                if (index === 0) imageElement.classList.add("active");
+                carouselContent.appendChild(imageElement);
+
+                // Thumbnail
+                const thumbnailElement = document.createElement("div");
+                thumbnailElement.classList.add("thumbnail-item");
+                thumbnailElement.onclick = function() { currentSlide(index); };
+
+                const thumbnailImage = document.createElement("img");
+                thumbnailImage.src = imageSrc;
+                thumbnailElement.appendChild(thumbnailImage);
+
+                thumbnailContainer.appendChild(thumbnailElement);
+            });
+
+            // Set the current slide
+            let currentIndex = 0;
+
+            function currentSlide(index) {
+                const slides = carouselContent.getElementsByClassName("modal-img");
+                const thumbnails = thumbnailContainer.getElementsByClassName("thumbnail-item");
+
+                Array.from(slides).forEach(slide => slide.classList.remove("active"));
+                Array.from(thumbnails).forEach(thumb => thumb.classList.remove("active"));
+
+                slides[index].classList.add("active");
+                thumbnails[index].classList.add("active");
+                currentIndex = index;
+            }
+
+            function plusSlides(n) {
+                let slides = carouselContent.getElementsByClassName("modal-img");
+                let newIndex = currentIndex + n;
+
+                if (newIndex < 0) newIndex = slides.length - 1;
+                if (newIndex >= slides.length) newIndex = 0;
+
+                currentSlide(newIndex);
+            }
+
+            window.plusSlides = plusSlides;
+        }
+
+        function closeModal() {
+            const modal = document.getElementById("myModal");
+            modal.style.display = "none";
+        }
+    </script>
+        <script>
+            // Ocultar el logo después de la animación y mostrar el contenido principal
+            window.addEventListener('load', () => {
+                setTimeout(() => {
+                    document.getElementById('logo-overlay').style.display = 'none';
+                    document.querySelectorAll('header, .social-icons, main, footer').forEach(el => {
+                        el.style.display = '';
+                    });
+                }, 1000); // Duración de la animación (en ms)
+            });
+        </script>
+
+<script>
+    const menuIcon = document.getElementById('menu-icon');
+    const menu = document.getElementById('menu');
+
+    menuIcon.addEventListener('click', () => {
+        menu.classList.toggle('show');
+    });
+</script>
+</body>
+</html>

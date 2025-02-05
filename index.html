@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es" translate="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google" content="notranslate">
+    <title>Diablos Negros</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+         .image-container {
+            max-width: 100%;
+            height: auto;
+            overflow: hidden;
+        }
+        
+        .image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto; /* Centra la imagen horizontalmente */
+        }
+
+        @media (max-width: 768px) { /* Media query para dispositivos móviles */
+            .image-container img {
+                max-width: 100%;
+                height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+ 
+    <!-- Header -->
+    <header>
+        <nav>
+            <!-- Ícono de menú hamburguesa -->
+            <div class="menu-icon" id="menu-icon">
+                <i class="fas fa-bars"></i>
+            </div>
+    
+            <!-- Menú principal -->
+            <ul class="menu" id="menu">
+                <li><a href="banda.html">BANDA</a></li>
+                <li><a href="musica.html">MÚSICA</a></li>
+                <li class="logo">
+                    <a href="index.html">
+                        <img src="imagenes/logo1.png" alt="Logo de la banda">
+                    </a>
+                </li>
+                <li><a href="media.html">MEDIA</a></li>
+                <li><a href="tienda.html">TIENDA</a></li>
+            </ul>
+    
+            <!-- Íconos sociales en la parte derecha -->
+            <div class="social-icons-right">
+                <a href="https://www.facebook.com/diablosnegroshn" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://x.com/diablosnegroshn" target="_blank" title="Gorjeo" class="nav-link text-white text-accent-hover p-1 fas fa-times"></a>
+                <a href="https://www.instagram.com/diablosnegroshn" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://youtube.com/@diablosnegrostv?si=oNcWLyUthcTKCA-M" target="_blank"><i class="fab fa-youtube"></i></a>
+            </div>
+        </nav>
+    </header>
+    
+
+    <!-- Contenido principal -->
+    <main>
+        <section class="portada">
+            <img src="imagenes/Foto DN back.jpg" alt="Portada de la banda">
+        </section>
+
+        <div class="social-icons" style="display: none;">
+            <a href="https://www.facebook.com/diablosnegroshn" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://x.com/diablosnegroshn" target="_blank" title="Gorjeo" class="nav-link text-white text-accent-hover p-1 fas fa-times"></a>
+            <a href="https://www.instagram.com/diablosnegroshn" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://youtube.com/@diablosnegrostv?si=oNcWLyUthcTKCA-M" target="_blank"><i class="fab fa-youtube"></i></a>
+        </div>
+
+   
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-image-container">
+            <img src="imagenes/logo3.jpg" alt="Logo Footer">
+        </div>
+        <p>&copy; 2025 Diablos Negros.</p>
+        <p>Contáctanos: diablosnegrosrock@gmail.com</p>
+        <p>
+            Diseño y gestión web por MEDIA FILMS. Vídeos y fotos por:
+            <a href="https://www.facebook.com/ARPhotographyHN?mibextid=ZbWKwL" target="_blank" style="margin-left: 10px;">
+                <img src="imagenes/alex.jpeg" alt="Icono Enlace" style="width: 60px; height: 60px; vertical-align: middle;">
+            </a>
+        </p>
+        <a href="https://vanguardiaproducciones.hn/diablos_negros/?fbclid=IwY2xjawHk8TFleHRuA2FlbQIxMAABHRlTAdL--R2wsgKCAvsBT8thyeh3nls6rKghGIh4eWq-6cz7UhmfyDSDNQ_aem_wDSbTrU1weFrfn7dqM7BIA" target="_blank">
+            <button style="background-color: #ffffff; color: #000; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+                Cotizar
+            </button>
+        </a>
+    </footer>
+
+    <!-- JavaScript para el menú hamburguesa -->
+    <script>
+        const menuIcon = document.getElementById('menu-icon');
+        const menu = document.getElementById('menu');
+
+        menuIcon.addEventListener('click', () => {
+            menu.classList.toggle('show');
+        });
+    </script>
+</body>
+</html>

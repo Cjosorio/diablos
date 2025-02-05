@@ -1,0 +1,342 @@
+/* Estilos generales */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    color: #000;
+    background-color: #fff;
+    overflow-x: hidden;
+    height: 100%; /* Asegura que el body ocupe toda la altura */
+    display: flex;
+    flex-direction: column; /* Organiza el contenido en columnas */
+}
+
+/* Header */
+header {
+    background-color: #000;
+    padding: 10px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000; /* Asegura que el header esté por encima del contenido */
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.menu-icon {
+    display: none; /* Ocultar en pantallas grandes */
+    font-size: 24px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.menu li {
+    margin: 0 20px;
+}
+
+.menu li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 8px 12px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+
+
+.logo img {
+    width: 100px;
+    height: auto;
+}
+
+/* Contenido principal */
+main {
+    flex: 1; /* Ocupa el espacio restante */
+    width: 100%; /* Asegura que ocupe todo el ancho */
+}
+
+.portada {
+    width: 100%;
+    height: 100vh; /* Ocupa toda la altura de la pantalla */
+    position: relative;
+    overflow: hidden; /* Evita desbordamientos */
+}
+
+.portada img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ajusta la imagen para cubrir todo el espacio */
+    display: block; /* Elimina espacios no deseados */
+}
+
+.descripcion {
+    text-align: center;
+    margin-top: 20px;
+    padding: 0 20px; /* Añade padding para que el texto no toque los bordes */
+}
+
+.descripcion h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+
+.descripcion p {
+    font-size: 1.2em;
+    color: #555;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #000000;
+    color: white;
+}
+
+footer .footer-image-container img {
+    max-width: 200px;
+    margin-bottom: 20px;
+}
+
+.cotizar-btn {
+    background-color: #ffffff;
+    color: #000;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.cotizar-btn:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+/* Media Queries para dispositivos móviles */
+@media (max-width: 768px) {
+    .menu-icon {
+        display: block; /* Mostrar ícono de menú en móviles */
+    }
+
+    .menu {
+        display: none; /* Ocultar menú en móviles */
+        flex-direction: column;
+        width: 100%;
+        background-color: #000;
+        position: absolute;
+        top: 60px;
+        left: 0;
+    }
+
+    .menu.show {
+        display: flex; /* Mostrar menú al hacer clic */
+    }
+
+    .menu li {
+        margin: 10px 0;
+        text-align: center;
+    }
+
+    .logo img {
+        width: 80px;
+    }
+
+    .descripcion h1 {
+        font-size: 2em;
+    }
+
+    .descripcion p {
+        font-size: 1em;
+    }
+
+    .footer-image-container img {
+        max-width: 100px;
+    }
+
+    .cotizar-btn {
+        width: 100%;
+        margin-top: 10px;
+    }
+}
+
+   /* Estilos para la animación del logo */
+   #logo-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+#logo {
+    width: 800px; /* Tamaño del logo */
+    animation: zoomInOut 2s infinite;
+}
+
+@keyframes zoomInOut {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+}
+
+/* Estilos para la imagen */
+.image-container {
+    width: 100%; /* Ancho completo */
+    height: 640px; /* Altura ajustada del contenedor */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border: 2px solid #000;
+    border-radius: 10px;
+}
+
+
+
+
+.image-container img {
+    width: 100%;  /* La imagen ocupa el 100% de la anchura del contenedor */
+    height: 100%; /* La imagen ocupa el 100% de la altura del contenedor */
+    object-fit: cover; /* Esto asegura que la imagen ocupe el espacio sin mantener la proporción */
+}
+
+.band-history {
+    text-align: center;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 800px;
+    font-family: Arial, sans-serif;
+}
+
+.band-history h2 {
+    font-size: 32px; /* Tamaño del título */
+    margin-bottom: 20px;
+}
+
+.band-history p {
+    line-height: 1.8; /* Espaciado entre líneas */
+    font-size: 20px; /* Tamaño del texto */
+    text-align: justify; /* Justificación del texto */
+}
+
+.band-history ul {
+    font-size: 20px; /* Tamaño del texto de la lista */
+    text-align: left; /* Alineación a la izquierda de la lista */
+    margin-top: 20px;
+}
+
+/* Estilos para las cards de los miembros */
+.band-members-cards {
+display: flex;
+justify-content: center; /* Centra las cartas */
+margin-top: 40px;
+gap: 5px; /* Espacio entre las cartas */
+margin-bottom: 40px; /* Añade espacio debajo de las cartas */
+max-width: 800px; /* Igual al max-width del texto */
+margin-left: auto; /* Centra el contenedor */
+margin-right: auto; /* Centra el contenedor */
+}
+
+.card {
+position: relative;
+width: 230px; /* Establece el mismo ancho para todas las cartas */
+height: 300px;
+overflow: hidden;
+box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4); /* Sombra más pronunciada */
+transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transición para la sombra y el tamaño */
+}
+
+.card img {
+width: 100%;
+height: 100%;
+object-fit: cover;
+}
+
+.card:hover {
+transform: translateY(-10px); /* Eleva la carta hacia arriba */
+box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5); /* Aumenta la sombra en hover */
+}
+
+.card-info {
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background-color: rgba(0, 0, 0, 0.6);
+color: white;
+opacity: 0;
+transition: opacity 0.3s ease;
+display: flex;
+justify-content: center;
+align-items: center;
+text-align: center;
+padding: 10px;
+}
+
+.card:hover .card-info {
+opacity: 1;
+}
+
+.card-info h3 {
+margin: 10px 0;
+font-size: 24px;
+}
+
+.card-info p {
+font-size: 18px;
+}
+
+/* Estilos para los íconos sociales */
+/* Estilos para los íconos sociales en la parte derecha */
+.social-icons-right {
+    position: absolute;
+    top: 50%;
+    right: 10px; /* Coloca los iconos a la derecha */
+    transform: translateY(-50%);
+    display: flex;
+    gap: 15px; /* Espaciado entre los íconos */
+    z-index: 1000; /* Asegura que esté por encima del contenido */
+}
+
+.social-icons-right a {
+    text-decoration: none;
+    color: #fff;
+    background-color: #000;
+    padding: 8px; /* Tamaño de los íconos */
+    border-radius: 50%;
+    font-size: 16px; /* Tamaño pequeño de los íconos */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.social-icons-right a:hover {
+    background-color: #fff;
+    color: #000;
+}
+
+

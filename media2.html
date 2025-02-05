@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diablos Negros</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Estilos para la animación del logo */
+        #logo-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        #logo {
+            width: 800px; /* Tamaño del logo */
+            animation: zoomInOut 2s infinite;
+        }
+
+        @keyframes zoomInOut {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+        }
+
+        /* Estilos generales */
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .gallery-section {
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        /* Estilos para la galería */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 0 15px;
+        }
+
+        /* Contenedor de cada imagen */
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5); /* Efecto de luz LED */
+        }
+
+        .gallery img {
+            width: 100%;
+            height: auto;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Overlay con la ciudad y la fecha */
+        .overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            width: 100%;
+            box-sizing: border-box;
+            border-radius: 8px; /* Ajusta según sea necesario */
+        }
+
+        .gallery-item:hover .overlay {
+            opacity: 1;
+        }
+
+        /* Responsividad de la galería */
+        @media (max-width: 768px) {
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 10px;
+                padding: 10px;
+            }
+
+            .overlay {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 5px;
+                padding: 5px;
+            }
+
+            .overlay {
+                font-size: 12px;
+            }
+        }
+
+        /* Estilos para el modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: center;
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 800px;
+            position: relative;
+        }
+
+        .modal-img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: auto;
+        }
+
+        .close {
+            color: #fff;
+            position: absolute;
+            top: 10px;
+            right: 25px;
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Estilos para el carrusel */
+        .carousel {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -22px;
+            color: #fff;
+            font-weight: bold;
+            font-size: 30px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .prev {
+            left: 0;
+        }
+
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        /* Miniaturas */
+        .thumbnail-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .thumbnail-item {
+            margin: 0 5px;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: opacity 0.3s ease;
+        }
+
+        .thumbnail-item:hover {
+            opacity: 1;
+        }
+
+        .thumbnail-item.active {
+            opacity: 1;
+            border: 2px solid #fff;
+        }
+
+        .thumbnail-item img {
+            width: 100px;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        /* Footer */
+        footer .footer-image-container img {
+            max-width: 200px;
+            margin-bottom: 20px;
+        }
+
+        footer {
+            background-color: #111;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        footer p {
+            margin: 5px 0;
+        }
+
+        footer a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Contenedor para el logo animado -->
+    <div id="logo-overlay">
+        <img id="logo" src="imagenes/logo2.png" alt="Logo de la banda">
+    </div>
+
+    <header style="display: none;">
+        <nav>
+            <ul class="menu">
+                <li><a href="banda.html">BANDA</a></li>
+                <li><a href="musica.html">MÚSICA</a></li>
+                <li class="logo">
+                    <a href="index.html" class="logo-link">
+                        <img src="imagenes/logo1.png" alt="Logo de la banda">
+                    </a>
+                </li>
+                <li><a href="media.html">MEDIA</a></li>
+                <li><a href="tienda.html">TIENDA</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Galería de conciertos -->
+    <div class="gallery-section">
+        <h2>Galería de Conciertos</h2>
+        <div class="gallery">
+            <!-- Galería de concierto 1 -->
+            <div class="gallery-item" onclick="openModal('concert1')">
+                <img src="imagenes/Perfil Emilio 01.jpg" alt="Concierto 1">
+                <div class="overlay">Tegucigalpa, 17 de noviembre 2024</div>
+            </div>
+
+            <!-- Galería de concierto 2 -->
+            <div class="gallery-item" onclick="openModal('concert2')">
+                <img src="imagenes/Perfil Carlos 01.jpg" alt="Concierto 2">
+                <div class="overlay">San Pedro Sula, 22 de noviembre 2024</div>
+            </div>
+
+            <!-- Galería de concierto 3 -->
+            <div class="gallery-item" onclick="openModal('concert3')">
+                <img src="imagenes/Perfil Dago 01.jpg" alt="Concierto 3">
+                <div class="overlay">La Ceiba, 1 de diciembre 2024</div>
+            </div>
+
+            <!-- Puedes agregar más galerías de conciertos según sea necesario -->
+        </div>
+    </div>
+
+    <!-- Modal para mostrar las imágenes -->
+    <div id="myModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <div class="modal-content">
+            <div class="carousel">
+                <span class="prev" onclick="plusSlides(-1)">&#10094;</span>
+                <img id="modal-img" class="modal-img" src="" alt="">
+                <span class="next" onclick="plusSlides(1)">&#10095;</span>
+            </div>
+            <div class="thumbnail-container" id="thumbnail-container">
+                <!-- Miniaturas de las imágenes -->
+                <div class="thumbnail-item" onclick="currentSlide(1)">
+                    <img src="imagenes/Perfil Emilio 01.jpg" alt="Concierto 1">
+                </div>
+                <div class="thumbnail-item" onclick="currentSlide(2)">
+                    <img src="imagenes/Perfil Carlos 01.jpg" alt="Concierto 2">
+                </div>
+                <div class="thumbnail-item" onclick="currentSlide(3)">
+                    <img src="imagenes/Perfil Dago 01.jpg" alt="Concierto 3">
+                </div>
+            </div>
+        </div>
+    </div>
+
+   <!-- Footer -->
+   <footer>
+    <!-- Imagen centrada al inicio -->
+    <div class="footer-image-container">
+        <img src="imagenes/logo3.jpg" alt="Logo Footer" class="footer-image">
+    </div>
+
+    <!-- Contenido del footer -->
+    <p>&copy; 2025 Diablos Negros.</p>
+    <p>Contáctanos: diablosnegrosrock@gmail.com</p>
+    <p>
+        Diseño y gestión web por MEDIA FILMS. Vídeos y fotos por:
+        <!-- Icono linkeado al final -->
+        <a href="https://www.facebook.com/ARPhotographyHN?mibextid=ZbWKwL" target="_blank" style="margin-left: 10px;">
+            <img src="imagenes/alex.jpeg" alt="Icono Enlace" style="width: 60px; height: 60px; vertical-align: middle;">
+        </a>
+    </p>
+    <a href="https://vanguardiaproducciones.hn/diablos_negros/?fbclid=IwY2xjawHk8TFleHRuA2FlbQIxMAABHRlTAdL--R2wsgKCAvsBT8thyeh3nls6rKghGIh4eWq-6cz7UhmfyDSDNQ_aem_wDSbTrU1weFrfn7dqM7BIA" target="_blank">
+        <button style="background-color: #ffffff; color: #000; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+            Cotizar
+        </button>
+    </a>
+</footer>
+
+    <!-- Script para el modal -->
+    <script>
+
+window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('logo-overlay').style.display = 'none';
+                document.querySelectorAll('header, main, footer').forEach(el => {
+                    el.style.display = '';
+                });
+            }, 1000); // Duración de la animación (en ms)
+        });
+        
+        let slideIndex = 1;
+
+        function openModal(concert) {
+            document.getElementById('myModal').style.display = 'block';
+            showSlides(slideIndex = concert);
+        }
+
+        function closeModal() {
+            document.getElementById('myModal').style.display = 'none';
+        }
+
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+            let i;
+            const slides = document.getElementsByClassName('modal-img');
+            const thumbnails = document.getElementsByClassName('thumbnail-item');
+            const captionText = document.getElementsByClassName('overlay');
+
+            if (n > slides.length) { slideIndex = 1; }
+            if (n < 1) { slideIndex = slides.length; }
+
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = 'none';
+            }
+
+            for (i = 0; i < thumbnails.length; i++) {
+                thumbnails[i].className = thumbnails[i].className.replace(' active', '');
+            }
+
+            slides[slideIndex - 1].style.display = 'block';
+            thumbnails[slideIndex - 1].className += ' active';
+        }
+
+        // Cerrar el modal haciendo clic fuera de él
+        window.onclick = function(event) {
+            const modal = document.getElementById('myModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        };
+    </script>
+</body>
+</html>
