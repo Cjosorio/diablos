@@ -82,6 +82,18 @@ main {
     display: block; /* Elimina espacios no deseados */
 }
 
+/* Ajustes para pantallas pequeñas, como dispositivos móviles en modo vertical */
+@media (max-width: 768px) {
+    .portada {
+        height: 100vh; /* Mantener la altura del 100% de la pantalla en móviles */
+    }
+
+    .portada img {
+        object-fit: cover; /* Mantiene el ajuste de la imagen */
+    }
+}
+
+
 .descripcion {
     text-align: center;
     margin-top: 20px;
