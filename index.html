@@ -44,13 +44,22 @@
     
 
     <!-- Contenido principal -->
-    <main>
-        <section class="portada">
-            <img src="imagenes/Foto DN back.jpg" alt="Portada de la banda">
-        </section>
+ <main>
+    <section class="portada">
+        <img 
+            srcset="imagenes/Foto_DN_back_320px.jpg 320w, 
+                    imagenes/Foto_DN_back_480px.jpg 480w, 
+                    imagenes/Foto_DN_back_768px.jpg 768w, 
+                    imagenes/Foto_DN_back_1200px.jpg 1200w"
+            sizes="(max-width: 320px) 320px, 
+                   (max-width: 768px) 480px, 
+                   (max-width: 1200px) 768px, 
+                   1200px"
+            src="imagenes/Foto_DN_back_1200px.jpg" 
+            alt="Portada de la banda">
+    </section>
+</main>
 
-   
-    </main>
 
     <!-- Footer -->
     <footer>
