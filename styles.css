@@ -114,7 +114,35 @@ main {
 }
 
 
+.videos {
+    background: linear-gradient(to right, #ffffff, #d3d3d3); /* Degradado blanco a gris */
+    padding: 20px 0;
+}
 
+.video-container {
+    display: flex;
+    justify-content: center; /* Centra los videos horizontalmente */
+    gap: 30px; /* Espacio entre los videos */
+    flex-wrap: nowrap; /* Impide que los videos se apilen verticalmente */
+}
+
+iframe {
+    width: 480px; /* Tamaño más grande de los videos */
+    height: 270px; /* Proporción estándar 16:9 */
+    border: none;
+}
+
+@media (max-width: 768px) {
+    .video-container {
+        flex-direction: column; /* En pantallas pequeñas, los videos se apilan verticalmente */
+        align-items: center; /* Centra los videos verticalmente */
+    }
+
+    iframe {
+        width: 100%; /* Se ajustan al tamaño de la pantalla en dispositivos pequeños */
+        height: auto;
+    }
+}
 
 
 .descripcion {
