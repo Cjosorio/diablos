@@ -88,7 +88,7 @@ main {
 .portada-img img {
     width: 100%;
     height: 100%;  /* Asegura que la imagen ocupe todo el espacio disponible */
-    object-fit: cover;  /* Hace que la imagen cubra todo el contenedor sin distorsionarse */
+    object-fit: cover;  /* Asegura que la imagen cubra todo el contenedor sin distorsionarse */
 }
 
 /* Media query para dispositivos móviles (hasta 768px de ancho) */
@@ -96,14 +96,23 @@ main {
     .portada {
         height: 50vh;  /* En dispositivos móviles, mantiene la altura en 50% de la pantalla */
     }
+
+    .portada-img img {
+        object-fit: cover;  /* En dispositivos móviles, mantiene el comportamiento cubriendo el contenedor */
+    }
 }
 
 /* Media query para pantallas más grandes (por ejemplo, tabletas y escritorios) */
 @media (min-width: 769px) {
     .portada {
-        height: 70vh;  /* En pantallas más grandes, cubre un 70% de la altura de la pantalla */
+        height: 100vh;  /* En pantallas más grandes, cubre el 100% de la altura de la pantalla */
+    }
+
+    .portada-img img {
+        object-fit: cover;  /* En pantallas más grandes, cubre todo el contenedor sin recortar */
     }
 }
+
 
 
 
