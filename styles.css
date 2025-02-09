@@ -25,22 +25,18 @@ nav {
     justify-content: space-between;
     align-items: center;
     padding: 0 20px;
+    width: 100%; /* Asegura que el nav ocupe el 100% del ancho disponible */
 }
 
-.menu-icon {
-    display: none; /* Ocultar en pantallas grandes */
-    font-size: 24px;
-    color: #fff;
-    cursor: pointer;
-}
-
+/* Menú en pantallas grandes (centrado) */
 .menu {
     display: flex;
-    justify-content: center;
+    justify-content: center;  /* Centrado en pantallas grandes */
     align-items: center;
     list-style: none;
     margin: 0;
     padding: 0;
+    width: 100%; /* Asegura que el contenedor ocupe todo el espacio disponible */
 }
 
 .menu li {
@@ -53,6 +49,26 @@ nav {
     font-weight: bold;
     padding: 8px 12px;
     transition: background-color 0.3s, color 0.3s;
+}
+
+/* Menú en pantallas pequeñas (alineado a la izquierda) */
+@media (max-width: 768px) {
+    nav {
+        justify-content: flex-start; /* Alinea el contenido a la izquierda en pantallas pequeñas */
+    }
+
+    .menu {
+        justify-content: flex-start; /* Alinea los items del menú a la izquierda */
+        width: auto; /* No ocupa todo el ancho disponible */
+    }
+
+    /* Estilo para el icono del menú hamburguesa */
+    .menu-icon {
+        display: block; /* Mostrar el ícono del menú en pantallas pequeñas */
+        font-size: 30px; /* Tamaño del ícono */
+        color: #fff; /* Color blanco */
+        cursor: pointer;
+    }
 }
 
 
